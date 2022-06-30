@@ -1,0 +1,276 @@
+body {
+  background: rgba(12, 59, 46, 1);
+}
+
+.bulat {
+  border-radius: 35px;
+}
+
+.belakang
+{
+z-index: -1;
+}
+
+.atas {
+  position:absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%
+}
+
+.bawah {
+  position:fixed;
+  bottom: 0px;
+  left: 0px;
+  width: 100%
+}
+
+.bege {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.bege-kiri {
+  background: rgba(8, 85, 64, 0.9);
+}
+
+.kiri {
+  text-align: left;
+}
+
+.kanan {
+  text-align: right;
+}
+
+a { color: inherit; } 
+
+.header {
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+.first-column {
+	color: white;
+	font-size: 2rem;
+	border-color:#000;  
+	align-items: center;
+	padding:0px;
+}
+.second-column {
+	border-width: 2px;
+	align-items: left;
+	padding:0px;
+}
+
+.second-colum {
+	border-width: 0px;
+	align-items: left;
+	padding:0px;
+	margin:35px;
+}
+
+.susuninfo {
+		border-width: 2px;
+		padding:0px;
+		text-align:center!important;
+		margin:5px;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  color: white;
+}
+
+li a {
+  display: block;
+  color: #fff;
+  padding: 5px 10px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* Change the link color on hover */
+li a:hover {
+  background-color: rgba(12, 59, 46, 1);
+  border-radius: 35px;
+  color: white;
+}
+
+.garismenu {
+  border: 2px solid #ffc107;
+	margin:0px;
+}
+
+.tombol-l1{
+	margin:0;
+	font-size:32px;
+	font-weight:bold;
+	color: green;
+}
+
+.tombol-l2{
+	margin:0;
+	font-weight:bold;
+	font-size:14px;
+	color: green;
+}
+
+.tmbl-menu {
+	margin:15px;
+}
+
+.tmbl-dash {
+	margin:15px;
+}
+
+/* NOTIF */
+.notification {
+  background-color: #555;
+  color: white;
+  text-decoration: none;
+  padding: 0px;
+  position: relative;
+  display: inline-block;
+  border-radius: 0px;
+}
+
+.notification2 {
+  text-decoration: none;
+}
+
+.notification:hover {
+  background: red;
+}
+
+.notification2:hover {
+  color: green;
+}
+
+.notification .badge {
+  position: absolute;
+  top: 0px;
+  left: -10px;
+  padding: 5px 10px;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+}
+
+.notification2 .badge2 {
+  position: relative;
+  top: -15px;
+  left: -10px;
+  padding: 2px 6px;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+	font-size:12px;
+}
+.tanda {
+	position: relative;
+	top: 0px;
+	right: -10px;
+	padding: 5px 10px;
+	border-radius: 50%;
+	background-color: red;
+	color: white;
+}
+/*
+.ntfbtn {
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.ntfbtn:hover, .ntfbtn:focus {
+  background-color: #2980B9;
+}
+
+.notif {
+  position: relative;
+  display: inline-block;
+	text-align: right;
+}
+
+.notif-content {
+  display: none;
+  position: absolute;
+	top: 50px;
+	right: 0px;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  overflow: auto;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.notif-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.notif a:hover {background-color: #ddd;}
+
+.show {display: block;}
+*/
+
+/* css tampilan mobile */
+.topnav {
+  width: 100%;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.5);
+  position: absolute;
+	display: none;
+}
+
+.topnav #myLinks {
+  display: none;
+}
+
+.topnav a {
+	color: white;
+	padding: 14px 16px;
+	text-decoration: none;
+	font-size: 17px;
+	font-weight: bold;
+	display: block;
+}
+
+.topnav a.icon {
+  background: black;
+  display: block;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.topnav a:hover {
+  background-color: #6d9773;
+  color: black;
+}
+
+.active {
+  /*background-color: #04AA6D;*/
+  color: white;
+}
+@media (max-width: 900px) {
+  .hidden-mobile {
+      display: none;
+  }
+	.show-mobile {
+      display: block;
+  }
+	.susuntombol {
+		border-width: 2px;
+		padding:40px;
+}
+	.tmbl-menu{
+		width:95%;
+		margin:0px 0px 20px;
+	}
+	
+}

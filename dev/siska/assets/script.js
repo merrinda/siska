@@ -1,0 +1,1 @@
+document.body.classList.add('d-flex', 'h-100', 'text-center', 'text-warning');
