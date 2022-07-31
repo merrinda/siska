@@ -1,8 +1,8 @@
 <?php
-if(isset($_GET['path']))
+if(isset($_GET['id']))
 {
 //Read the url
-$url = 'assets/file_dokumen/'.$_GET['path'];
+$url = 'assets/file_dokumen/'.$_GET['id'];
 
 //Clear the cache
 clearstatcache();
@@ -22,9 +22,10 @@ flush();
 
 //Read the size of the file
 readfile($url,true);
-
+//unlink($url);
 //Terminate from the script
 die();
+
 }
 else{
 echo "File path does not exist.";

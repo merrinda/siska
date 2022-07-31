@@ -8,9 +8,9 @@ function status($st){
 	if ($dt_usul['statuskawin'] == $st) { return ' selected="selected"'; } else { return '';}
 }
 if($hilang == '1'){
-	$hlg = '<input type="text" class="form-control" id="inputNama" name="hilang" value="'.$hilang.'" readonly>';
+	$hlg = '<input type="hidden" class="form-control" id="inputNama" name="hilang" value="'.$hilang.'" readonly>';
 } else {
-	$hlg = '<input type="text" class="form-control" id="inputNama" name="hilang" value="'.$dt_usul['hilang'].'" readonly>';
+	$hlg = '<input type="hidden" class="form-control" id="inputNama" name="hilang" value="'.$dt_usul['hilang'].'" readonly>';
 }
 $tgtgskpn = $tgtgpmlk = '';
 if($jenis_kartu == '1'){
@@ -21,6 +21,8 @@ if($jenis_kartu == '1'){
 	$tmtcp = $nokarpeg  = $tgskpn = $pmlk = $tgpmlk = 'required';
 	$nosk = $tgskpn = 'readonly style="background:black;"';
 	$tgtgpmlk = 'datepicker';
+	$sembunyi = '';
+	$sembunyi2 = 'style="display:none;"';
 	$jandaduda = '
 	<div class="row mb-3">
     <label for="inputJenis" class="col-sm-2 col-form-label">Status Perkawinan</label>
@@ -41,14 +43,16 @@ if($jenis_kartu == '2'){
 	$tmtcp = $nokarpeg  = $tgskpn = $pmlk = $tgpmlk = 'required';
 	$nosk = $tgskpn = 'readonly style="background:black;"';
 	$tgtgpmlk = 'datepicker';
+	$sembunyi = '';
+	$sembunyi2 = 'style="display:none;"';
 	$jandaduda = '
 	<div class="row mb-3">
     <label for="inputJenis" class="col-sm-2 col-form-label">Status Perkawinan</label>
     <div class="col-sm-10">
 		<select class="form-control" aria-label="statuskawin" name="statuskawin" required>
-			<option value="">Pilih Status Perkawinan</option>
-			<option value="1">Perkawinan Pertama</option>
-			<option value="2">Perkawinan Kedua atau selanjutnya</option>
+			<option value="" '.status('').'>Pilih Status Perkawinan</option>
+			<option value="1" '.status('1').'>Perkawinan Pertama</option>
+			<option value="2" '.status('2').'>Perkawinan Kedua atau selanjutnya</option>
 		</select>
     </div>
 	</div>
@@ -61,8 +65,10 @@ if($jenis_kartu == '3'){
 	$tmtcp = $nokarpeg = $nosk = $tgskpn = 'required';
 	$pmlk = $tgpmlk = 'readonly style="background:black;"';
 	$tgtgskpn = 'datepicker';
+	$sembunyi = 'style="display:none;"';
+	$sembunyi2 = '';
 	$jandaduda = '
-	<div class="row mb-3">
+	<div class="row mb-3" style="display:none;">
     <label for="inputJenis" class="col-sm-2 col-form-label" style="background:black;color:black;"></label>
     <div class="col-sm-10">
 		<select class="form-control" aria-label="statuskawin" name="statuskawin" readonly style="background:black;">
@@ -124,44 +130,44 @@ if($kel == '1'){
   <div class="row mb-3">
     <label for="inputTglNkh" class="col-sm-2 col-form-label">TMT CPNS</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control datepicker" id="tmtcp" name="tmtcp" <?= $tmtcp ?> value="<?= $dt_usul['tmt_cpns'] ?>">
+      <input type="text" class="form-control datepicker" placeholder="Pilih TMT CPNS" id="tmtcp" name="tmtcp" <?= $tmtcp ?> value="<?= $dt_usul['tmt_cpns'] ?>">
     </div>
   </div>
-  <div class="row mb-3">
+  <div class="row mb-3" <?= $sembunyi2 ?>>
     <label for="inputUnker" class="col-sm-2 col-form-label">No. SK PNS</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="inputUnker" name="noskpn" value="<?= $dt_usul['no_sk_pns'] ?>" <?= $nosk ?>>
+      <input type="text" class="form-control" placeholder="Masukkan No. SK PNS" id="inputUnker" name="noskpn" value="<?= $dt_usul['no_sk_pns'] ?>" <?= $nosk ?>>
     </div>
   </div>
-  <div class="row mb-3">
+  <div class="row mb-3" <?= $sembunyi2 ?>>
     <label for="inputTglNkh" class="col-sm-2 col-form-label">Tanggal SK PNS</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control <?= $tgtgskpn ?>" id="tgskpn" name="tgskpn" value="<?= $dt_usul['tgl_sk_pns'] ?>" <?= $tgskpn ?>>
+      <input type="text" class="form-control <?= $tgtgskpn ?>" placeholder="Pilih Tanggal SK PNS" id="tgskpn" name="tgskpn" value="<?= $dt_usul['tgl_sk_pns'] ?>" <?= $tgskpn ?>>
     </div>
   </div>
   <div class="row mb-3">
     <label for="inputUnker" class="col-sm-2 col-form-label">No. KARPEG</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="inputUnker" name="karpeg" value="<?= $dt_usul['karpeg'] ?>" <?= $nokarpeg ?>>
+      <input type="text" class="form-control" placeholder="Isikan No. Karpeg, isi tanda - jika belum memiliki" id="inputUnker" name="karpeg" value="<?= $dt_usul['karpeg'] ?>" <?= $nokarpeg ?>>
     </div>
   </div>
-  <div class="row mb-3">
+  <div class="row mb-3" <?= $sembunyi ?>>
     <label for="inputUnker" class="col-sm-2 col-form-label">Nama Pemilik</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="inputUnker" name="namapemilik" value="<?= $dt_usul['nama_pemilik'] ?>" <?= $pmlk ?>>
+      <input type="text" class="form-control" placeholder="Isikan nama pemilik" id="inputUnker" name="namapemilik" value="<?= $dt_usul['nama_pemilik'] ?>" <?= $pmlk ?>>
     </div>
   </div>
-  <div class="row mb-3">
+  <div class="row mb-3" <?= $sembunyi ?>>
     <label for="inputTglNkh" class="col-sm-2 col-form-label">Tanggal Lahir Pemilik</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control <?= $tgtgpmlk ?>" id="inputTglNkh" name="tglpemilik" value="<?= $dt_usul['tgl_lhr_pemilik'] ?>" <?= $tgpmlk ?>>
+      <input type="text" class="form-control <?= $tgtgpmlk ?>" placeholder="Pilih tanggal lahir pemilik" id="inputTglNkh" name="tglpemilik" value="<?= $dt_usul['tgl_lhr_pemilik'] ?>" <?= $tgpmlk ?>>
     </div>
   </div>
   <?= $jandaduda ?>
   <div class="row mb-3">
     <label for="inputPasangan" class="col-sm-2 col-form-label">No. HP Aktif</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="inputPasangan" name="nohp" value="<?= $dt_usul['no_hp'] ?>" required>
+      <input type="text" class="form-control" placeholder="Isikan No. HP aktif" id="inputPasangan" name="nohp" value="<?= $dt_usul['no_hp'] ?>" required>
     </div>
   </div>
   <?= $hlg ?>
@@ -170,7 +176,7 @@ if($kel == '1'){
   </div>
   <br><br>
 </form>
-<button class="btn btn-danger" onclick="location.href='<?= $l ?>';">Selanjutnya</button>
+<!--<button class="btn btn-danger" onclick="location.href='<?= $l ?>';">Selanjutnya</button>-->
 </div>
 </div>
 

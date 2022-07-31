@@ -1,8 +1,12 @@
 					<div style="margin: 0px;padding:0px;">
 						<div class="col-md-12 notif">
-							<a href="#notif" class="icon notification2 hidden-mobile">
+							<a href="<?= $base_url.$link_notif ?>" class="icon notification2 hidden-mobile">
 								<span><i class="fa fa-bell"></i></span>
-								<span class="badge2">3</span>
+								<?php
+								if($notif_count > 0){
+									echo '<span class="badge2">'.$notif_count.'</span>';
+								}
+								?>
 							</a>
 						</div>
 					</div>
@@ -33,7 +37,7 @@
 							<div class="row">
 								<div class="col-md-8">
 									<h5 class="text-dark">KARIS</h5>
-									<h3 class="text-dark">20</h3>
+									<h3 class="text-dark"><?= cek_hitung_usulan('1')->num_rows; ?></h3>
 								</div>
 								<div class="col-md-4">
 									<h1 class="text-dark"><i class="fa fa-pie-chart"></i></h1>
@@ -44,7 +48,7 @@
 							<div class="row">
 								<div class="col-md-8">
 									<h5 class="text-dark">KARSU</h5>
-									<h3 class="text-dark">20</h3>
+									<h3 class="text-dark"><?= cek_hitung_usulan('2')->num_rows; ?></h3>
 								</div>
 								<div class="col-md-4">
 									<h1 class="text-dark"><i class="fa fa-pie-chart"></i></h1>
@@ -55,7 +59,7 @@
 							<div class="row">
 								<div class="col-md-8">
 									<h5 class="text-dark">KARPEG</h5>
-									<h3 class="text-dark">20</h3>
+									<h3 class="text-dark"><?= cek_hitung_usulan('3')->num_rows; ?></h3>
 								</div>
 								<div class="col-md-4">
 									<h1 class="text-dark"><i class="fa fa-pie-chart"></i></h1>
@@ -66,7 +70,7 @@
 					<div class="susuninfo" style="">
 						<button class="btn btn-warning tmbl-dash col-10">
 							<h1 class="text-dark"><i class="fa fa-area-chart"></i></h1>
-							<h5 class="text-dark">Total 60 Usulan</h5>
+							<h5 class="text-dark">Total <?= cek_hitung_usulan('1')->num_rows + cek_hitung_usulan('2')->num_rows + cek_hitung_usulan('3')->num_rows ?> Usulan Aktif</h5>
 						</button>
 					</div>
 

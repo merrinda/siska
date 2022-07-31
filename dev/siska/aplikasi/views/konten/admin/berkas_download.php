@@ -18,9 +18,13 @@ if(isset($_SESSION['flash_message'])) {
 ?>
 					<div style="margin: 0px;padding:0px;">
 						<div class="col-md-12 notif">
-							<a href="#notif" class="icon notification2 hidden-mobile">
+							<a href="<?= $base_url.$link_notif ?>" class="icon notification2 hidden-mobile">
 								<span><i class="fa fa-bell"></i></span>
-								<span class="badge2">3</span>
+								<?php
+								if($notif_count > 0){
+									echo '<span class="badge2">'.$notif_count.'</span>';
+								}
+								?>
 							</a>
 						</div>
 					</div>
@@ -69,19 +73,8 @@ if(isset($_SESSION['flash_message'])) {
 			<td><?= $cb['nama'] ?></td>
 			<td><?= $ju ?></td>
 			<td>
-				<button class="btn btn-info" 
-					data-bs-toggle="modal"
-					data-bs-target="#tampilberkas"
-					data-bs-idusul="<?= $cb['id_usulan'] ?>"
-					data-bs-nip="<?= $cb['nip'] ?>"
-					data-bs-nama="<?= $cb['nama'] ?>"
-					data-bs-ju="<?= $ju ?>"
-					data-bs-tlhr="<?= $cb['tgl_lhr'] ?>"
-					data-bs-jk="<?= $cb['jk'] ?>"
-					data-bs-tmtcp="<?= $cb['tmtcp'] ?>"
-					data-bs-stts="<?= $cb['status'] ?>"
-					>
-				Detail</button>
+				<button class="btn btn-info" onclick="location.href='<?= $base_url.'/dl.php?id='.$cb['id_usulan'] ?>.zip';">
+				Download</button>
 			</td>
 		</tr>
 		<?php

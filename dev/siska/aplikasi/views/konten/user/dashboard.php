@@ -1,8 +1,12 @@
 					<div style="margin: 0px;padding:0px;">
 						<div class="col-md-12 notif">
-							<a href="#notif" class="icon notification2 hidden-mobile">
+							<a href="<?= $base_url.$link_notif ?>" class="icon notification2 hidden-mobile">
 								<span><i class="fa fa-bell"></i></span>
-								<span class="badge2">3</span>
+								<?php
+								if($notif_count > 0){
+									echo '<span class="badge2">'.$notif_count.'</span>';
+								}
+								?>
 							</a>
 						</div>
 					</div>

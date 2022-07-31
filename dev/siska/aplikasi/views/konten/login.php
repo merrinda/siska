@@ -13,7 +13,7 @@ if(isset($_SESSION['flash_message'])) {
 
 	<center>
 	<form method="POST" action="<?= $a ?>" style="width: 60%;margin: 0px;padding:0px;">
-      <img class="mb-4" src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
+      <img class="mb-4" src="<?= $base_url ?>/assets/image/logo.png" alt="" width="80">
       <h1 class="h3 mb-3 font-weight-normal">Silahkan login terlebih dahulu</h1>
 	  <div class="<?= $alert; ?> alert-danger" role="alert" style="<?= $alrt; ?>">
 		<?= $message; ?>

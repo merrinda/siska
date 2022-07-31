@@ -15,6 +15,17 @@ function usulan($id){
 	return $result;
 }
 
+function cek_hitung_usulan($krt){
+	$statlist = array('1,2,3,4,5,6,7,8,9');
+	$status = implode(',', $statlist);
+	$data = array(
+		'status' => '1'
+	);
+	$kuer = "SELECT * FROM tb_usul WHERE status in ($status) AND jenis_usulan = '$krt'";
+	$ada = kueri($kuer);
+	return $ada;
+}
+
 function cekberkasusulan($st){
 	//$jns = $jenis;
 	$statlist = $st;
@@ -22,11 +33,68 @@ function cekberkasusulan($st){
 	$data = array(
 		'status' => '1'
 	);
-	$kuer = "SELECT * FROM tb_usul WHERE status in ('$status')";
+	$kuer = "SELECT * FROM tb_usul WHERE status in ($status)";
 	$ada = kueri($kuer);
 	return $ada;
+	//return $kuer;
 }
 
+function ceksurat($st){
+	//$jns = $jenis;
+	$statlist = $st;
+	$status = implode(',', $statlist);
+	$data = array(
+		'status' => '1'
+	);
+	$kuer = "SELECT * FROM tb_usul WHERE status in ($status) group by no_surat";
+	$ada = kueri($kuer);
+	return $ada;
+	//return $kuer;
+}
+
+function ceknosurat($st,$ns){
+	//$jns = $jenis;
+	$statlist = $st;
+	$status = implode(',', $statlist);
+	$nosurat = $ns;
+	$no_surat = str_replace("garing","/",$nosurat);
+	$no_surat = str_replace("spc"," ",$no_surat);
+	$data = array(
+		'status' => '1'
+	);
+	$kuer = "SELECT * FROM tb_usul WHERE status in ($status) AND no_surat = '$no_surat'";
+	$ada = kueri($kuer);
+	return $ada;
+	//return $kuer;
+}
+
+function cekberkasusulan_surat($st,$ju){
+	//$jns = $jenis;
+	$statlist = $st;
+	$julist = $ju;
+	$status = implode(',', $statlist);
+	$jusul = implode(',', $julist);
+	$data = array(
+		'status' => '1'
+	);
+	$kuer = "SELECT * FROM tb_usul WHERE status in ($status) and jenis_usulan in ($jusul)";
+	$ada = kueri($kuer);
+	return $ada;
+	//return $kuer;
+}
+
+function cekberkasreport($st,$usul,$filter){
+	//$jns = $jenis;
+	$statlist = $st;
+	$status = implode(',', $statlist);
+	$data = array(
+		'status' => '1'
+	);
+	$kuer = "SELECT * FROM tb_usul WHERE status in ($status) AND jenis_usulan = '$usul' $filter";
+	$ada = kueri($kuer);
+	return $ada;
+	//return $kuer;
+}
 //cek list syarat
 function syarat($id = null,$khusus = null){
 	if($khusus != null){
@@ -75,6 +143,40 @@ function cek_syarat($id,$dok){
 	return $result;
 }
 
+function cek_notif($tujuan){
+	$statlist = array('1','2');
+	$status = implode(',', $statlist);
+	$kuer = "SELECT * FROM tb_notif WHERE status in ($status) AND tujuan = '$tujuan' ORDER BY id DESC";
+	$ada = kueri($kuer);
+	return $ada;
+}
+
+function dismiss_notif($tujuan){
+	$statlist = array('1');
+	$status = implode(',', $statlist);
+	/*
+	$data = array(
+		'status' => '1'
+	);
+	*/
+	$kuer = "UPDATE tb_notif set status = '2' WHERE status in ($status) AND tujuan = '$tujuan'";
+	$ada = kueri($kuer);
+	return $ada;
+}
+
+function simpan_notif($tujuan,$pesan,$link){
+	$data = array(
+		'tujuan' => $tujuan,
+		'pesan' => $pesan,
+		'link' => $link,
+		'tanggal' => date('Y-m-d'),
+		'status' => '1'
+	);
+	
+	//$kuer = "SELECT * FROM tb_notif WHERE status in ($status) AND tujuan = '$tujuan'";
+	$ada = kueri_insert('tb_notif',$data);
+	return $ada;
+}
 //untuk pencarian dalam database
 function cari_like($table,$data){
 	global $conn;

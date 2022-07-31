@@ -13,7 +13,7 @@ if(isset($_POST['x'])){
 				echo '"'.$key.'"<br/>';   
 				$_POST['x']($key);
 			}
-			$_SESSION['flash_message'] = "Update Berhasil, silahkan cetak surat pengantar di halaman report dan download file pendukung dari halaman download berkas";
+			$_SESSION['flash_message'] = "Update Berhasil, silahkan cetak surat pengantar di menu Surat Pengantar dan download file pendukung dari halaman download berkas";
 			header("Location: ".$base_url.'/admin/kirim_berkas');
 		} else {
 			echo 'id_usul undefined';

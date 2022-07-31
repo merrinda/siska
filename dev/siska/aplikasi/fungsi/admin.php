@@ -138,15 +138,66 @@ function simpanperbaikanusul(){
 		exit();
 	}
 }
+function hapusberkas(){
+	session_start();
+	$id = $_GET['id'];
+	$kondisi = 'id_usulan = "'.$id.'"';
+	$q_hapus = 'delete from tb_usul where '.$kondisi;
+	//$q_hapus = 'update tb_usul set status = "15" where '.$kondisi;
+	echo $q_hapus;
+	$cek = kueri($q_hapus);
+	if($cek){
+		//echo 'UPDATE FILE BERHASIL';
+		$_SESSION['flash_message'] = "BERKAS BERHASIL DIHAPUS";
+		simpan_notif($nip,'Berkasanda telah dihapus','#');
+	} else {
+		//echo 'GAGAL MENYIMPAN DATABASE';
+		$_SESSION['flash_message'] = "GAGAL MENGHAPUS";
+		//header("Location: ".$_SERVER['HTTP_REFERER']);
+	}
+	header("Location: ".$_SERVER['HTTP_REFERER']);
+}
 
 function terimaberkas(){
 	session_start();
 	$id_usul = $_GET['id'];
 	echo 'BERKAS DENGAN ID USUL "'.$id_usul.'" AKAN DITERIMA.';
-	
 	$dataupdate = 'status = "2"';
 	$kondisi = 'id_usulan = "'.$id_usul.'"';
 	$q = kueri_update('tb_usul',$dataupdate,$kondisi);
+	$q_ceknip = 'select * from tb_usul where '.$kondisi;
+	$cek = kueri($q_ceknip);
+	foreach($cek as $c){
+		$nip = $c['nip'];
+		$jenis = $c['jenis_usulan'];
+	}
+	$p = data_pesan('2',$jenis,$id_usul);
+	$pesan = $p[0];
+	$link = $p[1];
+	//echo $nip;
+	if($q){
+		//echo 'UPDATE FILE BERHASIL';
+		$_SESSION['flash_message'] = "UPDATE STATUS BERHASIL";
+		simpan_notif($nip,$pesan,$link);
+	} else {
+		//echo 'GAGAL MENYIMPAN DATABASE';
+		$_SESSION['flash_message'] = "GAGAL MENYIMPAN DATABASE";
+		//header("Location: ".$_SERVER['HTTP_REFERER']);
+	}
+	header("Location: ".$_SERVER['HTTP_REFERER']);
+}
+
+function ver_dok(){
+	session_start();
+	$id_dok = $_POST['iddok'];
+	$status = $_POST['status'];
+	$alasan = $_POST['alasan'];
+	
+	echo 'BERKAS DENGAN ID USUL "'.$id_usul.'" AKAN DITERIMA.';
+	
+	$dataupdate = 'id_dok = "'.$id_dok.'", status = "'.$status.'", note = "'.$alasan.'"';
+	$kondisi = 'id_dok = "'.$id_dok.'"';
+	$q = kueri_update('tb_dokumen',$dataupdate,$kondisi);
 	if($q){
 		//echo 'UPDATE FILE BERHASIL';
 		$_SESSION['flash_message'] = "UPDATE STATUS BERHASIL";
@@ -156,6 +207,125 @@ function terimaberkas(){
 		//header("Location: ".$_SERVER['HTTP_REFERER']);
 	}
 	header("Location: ".$_SERVER['HTTP_REFERER']);
+}
+
+function ver_usul(){
+	global $base_url;
+	session_start();
+	$id_usul = $_POST['id'];
+	$status = $_POST['status'];
+	$alasan = $_POST['alasan'];
+	echo 'BERKAS DENGAN ID USUL "'.$id_usul.'" AKAN DITERIMA.';
+	
+	$dataupdate = 'status = "'.$status.'", ket = "'.$alasan.'"';
+	$kondisi = 'id_usulan = "'.$id_usul.'"';
+	$q = kueri_update('tb_usul',$dataupdate,$kondisi);
+	$q_ceknip = 'select * from tb_usul where '.$kondisi;
+	$cek = kueri($q_ceknip);
+	foreach($cek as $c){
+		$nip = $c['nip'];
+		$jenis = $c['jenis_usulan'];
+	}
+	$p = data_pesan($status,$jenis,$id_usul);
+	$pesan = $p[0];
+	$link = $p[1];
+	if($q){
+		//echo 'UPDATE FILE BERHASIL';
+		$_SESSION['flash_message'] = "UPDATE STATUS BERHASIL";
+		simpan_notif($nip,$pesan,$link);
+	} else {
+		//echo 'GAGAL MENYIMPAN DATABASE';
+		$_SESSION['flash_message'] = "GAGAL MENYIMPAN DATABASE";
+		//header("Location: ".$_SERVER['HTTP_REFERER']);
+	}
+	header("Location: ".$base_url."/admin/verifikasi");
+}
+
+function ver_usul_bkn(){
+	global $base_url;
+	session_start();
+	$id_usul = $_POST['id'];
+	$nip = $_POST['nip'];
+	$status = $_POST['status'];
+	if(isset($_POST['alasan'])){
+		$alasan = $_POST['alasan'];
+	} else {
+		$alasan = '';
+	}
+	if(isset($_POST['tgselesai'])){
+		$tg_selesai = $_POST['tgselesai'];
+	} else {
+		$tg_selesai = '';
+	}
+	$pengambilan = $_POST['pengambilan'];
+	if($status == '8'){
+		$ket = $alasan;
+	} else
+	if($status == '9'){
+		$ket = $pengambilan;
+	}
+	
+	echo 'BERKAS DENGAN ID USUL "'.$id_usul.'" AKAN DITERIMA.';
+	
+	$dataupdate = 'status = "'.$status.'", tgl_selesai = "'.$tg_selesai.'", ket = "'.$ket.'"';
+	$kondisi = 'id_usulan = "'.$id_usul.'"';
+	//var_dump($dataupdate);
+	$q = kueri_update('tb_usul',$dataupdate,$kondisi);
+	$q_ceknip = 'select * from tb_usul where '.$kondisi;
+	$cek = kueri($q_ceknip);
+	foreach($cek as $c){
+		$nip = $c['nip'];
+		$jenis = $c['jenis_usulan'];
+	}
+	$p = data_pesan($status,$jenis,$id_usul);
+	$pesan = $p[0];
+	$link = $p[1];
+	
+	if($q){
+		//echo 'UPDATE FILE BERHASIL';
+		$_SESSION['flash_message'] = "UPDATE STATUS BERHASIL";
+		simpan_notif($nip,$pesan,$link);
+	} else {
+		//echo 'GAGAL MENYIMPAN DATABASE';
+		$_SESSION['flash_message'] = "GAGAL MENYIMPAN DATABASE";
+		//header("Location: ".$_SERVER['HTTP_REFERER']);
+	}
+	header("Location: ".$base_url."/admin/verifikasi");
+	
+}
+
+function detail_pengambilan(){
+	global $base_url;
+	session_start();
+	$id_usul = $_POST['id'];
+	$status = $_POST['status'];
+	$nama = $_POST['nama_pengambil'];
+	$tanggal = $_POST['tanggal_pengambilan'];
+	$pengambilan = 'Telah diambil oleh '.$nama.' pada tanggal '.$tanggal;
+	echo 'BERKAS DENGAN ID USUL "'.$id_usul.'" AKAN DITERIMA.';
+	
+	$dataupdate = 'status = "'.$status.'", ket = "'.$pengambilan.'"';
+	$kondisi = 'id_usulan = "'.$id_usul.'"';
+	$q = kueri_update('tb_usul',$dataupdate,$kondisi);
+	$q_ceknip = 'select * from tb_usul where '.$kondisi;
+	$cek = kueri($q_ceknip);
+	foreach($cek as $c){
+		$nip = $c['nip'];
+		$jenis = $c['jenis_usulan'];
+	}
+	$p = data_pesan($status,$jenis,$id_usul);
+	$pesan = $p[0];
+	$link = $p[1];
+	if($q){
+		//echo 'UPDATE FILE BERHASIL';
+		$_SESSION['flash_message'] = "UPDATE STATUS BERHASIL";
+		simpan_notif($nip,$pesan,$link);
+	} else {
+		//echo 'GAGAL MENYIMPAN DATABASE';
+		$_SESSION['flash_message'] = "GAGAL MENYIMPAN DATABASE";
+		//header("Location: ".$_SERVER['HTTP_REFERER']);
+	}
+	header("Location: ".$base_url."/admin/verifikasi");
 }
 
 function kirim_berkas(){
@@ -180,7 +350,7 @@ function kirim_berkas(){
 		$idusul = $dd['id_usulan'];
 		if($cek > 0){
 			$_SESSION['flash_message'] = "Data Berhasil Disimpan";
-			header("Location: ".$base_url."/user/usul/status/".$idusul);
+			//header("Location: ".$base_url."/user/usul/status/".$idusul);
 			//header("Location: ".$_SERVER['HTTP_REFERER']);
 			exit();
 		}		
@@ -205,8 +375,19 @@ function batch_kirim_berkas(){
 					//echo '<br>';
 					//echo $base_url.'/assets/dlzip.php';
 					//echo '<br>';
+					$kondisi = 'id_usulan = "'.$updateid.'"';
+					$q_ceknip = 'select * from tb_usul where '.$kondisi;
+					$cek = kueri($q_ceknip);
+					foreach($cek as $c){
+						$nip = $c['nip'];
+						$jenis = $c['jenis_usulan'];
+					}
+					$p = data_pesan('6',$jenis,$updateid);
+					$pesan = $p[0];
+					$link = $p[1];
 					$kuer = 'UPDATE tb_usul SET status = "6" WHERE id_usulan = "'.$updateid.'"';
 					kueri($kuer);
+					simpan_notif($nip,$pesan,$link);
                 }
             }
             echo '<form id="testForm" method="post"><input type="hidden" name="x" value="olahzip"><input type="hidden" name="id" value="'.$batch.'"></form>';
@@ -215,6 +396,50 @@ function batch_kirim_berkas(){
 				var e = document.getElementById("testForm"); e.action="'.$base_url.'/assets/dlzip.php"; e.submit();
 				</script>
 				';
+        }
+}
+
+function batch_cetak_surat(){
+	global $base_url;
+	$aidi = '';
+	if(isset($_POST['batch_update'])){
+			$nosurat = $_POST['nosurat'];
+			$tgsurat = date("Y-m-d");
+            if(isset($_POST['update'])){
+                foreach($_POST['update'] as $updateid){
+					//echo 'UPDATE users SET status = "4" WHERE id_usulan = "'.$updateid.'"';
+					//echo '<br>';
+					$aidi .= $updateid.',';
+					$batch = rtrim($aidi, ",");
+					//echo '<br>';
+					//echo $base_url.'/assets/dlzip.php';
+					//echo '<br>';
+					$kondisi = 'id_usulan = "'.$updateid.'"';
+					$q_ceknip = 'select * from tb_usul where '.$kondisi;
+					$cek = kueri($q_ceknip);
+					foreach($cek as $c){
+						$nip = $c['nip'];
+						$jenis = $c['jenis_usulan'];
+					}
+					$p = data_pesan('7',$jenis,$updateid);
+					$pesan = $p[0];
+					$link = $p[1];
+					$kuer = 'UPDATE tb_usul SET status = "7", no_surat = "'.$nosurat.'", tgl_surat = "'.$tgsurat.'", tgl_kirim = "'.$tgsurat.'" WHERE id_usulan = "'.$updateid.'"';
+					kueri($kuer);
+					simpan_notif($nip,$pesan,$link);
+                }
+            }
+			/*
+            echo '<form id="testForm" method="post"><input type="hidden" name="x" value="olahzip"><input type="hidden" name="id" value="'.$batch.'"></form>';
+			echo '
+				<script type="text/javascript">
+				var e = document.getElementById("testForm"); e.action="'.$base_url.'/assets/dlzip.php"; e.submit();
+				</script>
+				';
+			*/
+			$no_surat = str_replace("/","garing",$nosurat);
+			$no_surat = str_replace(" ","spc",$no_surat);
+			header("Location: ".$base_url."/admin/cetak_surat_pengantar/".$no_surat);
         }
 }
 
@@ -290,6 +515,54 @@ function upload_dok(){
 	}
 	header("Location: ".$_SERVER['HTTP_REFERER']);
 	
+}
+
+function data_pesan($id,$jk,$idberkas){
+	if($jk == '1'){
+		$jeniskartu = 'KARIS';
+	} else
+	if($jk == '2'){
+		$jeniskartu = 'KARSU';
+	} else
+	if($jk == '3'){
+		$jeniskartu = 'KARPEG';
+	}
+	if($id == '2'){
+		$pesan = 'Berkas '.$jeniskartu.' anda telah diterima oleh admin untuk verifikasi, silahkan cek progres berkas';
+		$link = '/user/usul/status/'.$idberkas;
+	} else 
+	if($id == '3'){
+		$pesan = 'Berkas '.$jeniskartu.' anda telah disetujui oleh admin, silahkan cek progres berkas';
+		$link = '/user/usul/status/'.$idberkas;
+	} else 
+	if($id == '4'){
+		$pesan = 'Berkas anda perlu perbaikan, silahkan cek progres berkas';
+		$link = '/user/usul/status/'.$idberkas;
+	} else 
+	if($id == '6'){
+		$pesan = 'Berkas '.$jeniskartu.' anda siap dikirim ke BKN, silahkan cek progres berkas';
+		$link = '/user/usul/status/'.$idberkas;
+	} else 
+	if($id == '7'){
+		$pesan = 'Berkas '.$jeniskartu.' anda telah dikirim ke BKN, silahkan cek progres berkas';
+		$link = '/user/usul/status/'.$idberkas;
+	} else 
+	if($id == '8'){
+		$pesan = 'Berkas '.$jeniskartu.' anda dikembalikan oleh BKN [BTL], silahkan cek progres berkas untuk perbaikan';
+		$link = '/user/usul/status/'.$idberkas;
+	} else 
+	if($id == '9'){
+		$pesan = 'Berkas '.$jeniskartu.' anda telah selesai diproses, silahkan cek progres berkas';
+		$link = '/user/usul/status/'.$idberkas;
+	} else 
+	if($id == '10'){
+		$pesan = 'Berkas '.$jeniskartu.' anda telah diambil';
+		$link = '/user/usul/status/'.$idberkas;
+	} else {
+		$pesan = '-';
+		$link = '#';
+	}
+	return array($pesan,$link);
 }
 
 /*

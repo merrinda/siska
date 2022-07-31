@@ -2,6 +2,10 @@ body {
   background: rgba(12, 59, 46, 1);
 }
 
+.hirang{
+	font-color:black;
+}
+
 .bulat {
   border-radius: 35px;
 }
@@ -263,6 +267,7 @@ li a:hover {
   }
 	.show-mobile {
       display: block;
+	  z-index: 1;
   }
 	.susuntombol {
 		border-width: 2px;
@@ -272,5 +277,4 @@ li a:hover {
 		width:95%;
 		margin:0px 0px 20px;
 	}
-	
 }

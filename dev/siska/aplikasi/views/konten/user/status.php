@@ -3,6 +3,7 @@ $dt_usul = mysqli_fetch_assoc($data_usul);
 $jenis_kartu = $dt_usul['jenis_usulan'];
 $id_usul = $dt_usul['id_usulan'];
 $lanjut = $base_url.'/user/usulperbaikan/'.$id_usul;
+$perbaiki = $base_url.'/user/usul/perbaikan/'.$id_usul;
 $selesai = $base_url.'/user/usul/detail_pengambilan/'.$id_usul;
 $ambil = $base_url.'/user/usul/detail_pengambilan/'.$id_usul;
 if($jenis_kartu == '1'){
@@ -37,41 +38,69 @@ if($status == '1'){
 	$note = '';
 } else
 if($status == '2'){
-	$k_stat = 'Berkas diterima oleh admin BKPSDM';
+	$k_stat = 'Berkas dalam proses verifikasi oleh admin BKPSDM';
 	$n_stat = '32%';
 	$button = '';
 	$icon = '<h1><i class="fa fa-refresh fa-spin"></i></h1>';
 	$note = '';
 } else
 if($status == '3'){
-	$k_stat = 'Perbaikan Berkas';
-	$n_stat = '48%';
+	$k_stat = 'Berkas diterima oleh admin BKPSDM';
+	$n_stat = '32%';
 	$button = '';
 	$icon = '<h1><i class="fa fa-refresh fa-spin"></i></h1>';
-	$note = 'Terdapat kesalahan pada data atau syarat yang anda upload';
+	$note = '';
 } else
 if($status == '4'){
+	$k_stat = 'Perbaikan Berkas';
+	$n_stat = '48%';
+	$button = '<p><button type="button" class="btn btn-primary" onclick="location.href=\''.$perbaiki.'\';">Perbaiki Berkas</button></p>';
+	$icon = '<h1><i class="fa fa-refresh fa-spin"></i></h1>';
+	$note = $dt_usul['ket'];
+} else
+if($status == '4a'){
+	$k_stat = 'Perbaikan Berkas';
+	$n_stat = '48%';
+	$button = '<p><button type="button" class="btn btn-primary" onclick="location.href=\''.$perbaiki.'\';">Perbaiki Berkas</button></p>';
+	$icon = '<h1><i class="fa fa-refresh fa-spin"></i></h1>';
+	$note = $dt_usul['ket'];
+} else
+if($status == '5'){
+	$k_stat = 'Berkas dikirim ulang untuk verifikasi Admin BKPSDM';
+	$n_stat = '64%';
+	$button = '';
+	$icon = '<h1><i class="fa fa-refresh fa-spin"></i></h1>';
+	$note = '';
+} else
+if($status == '6'){
+	$k_stat = 'Berkas siap dikirim ke BKN';
+	$n_stat = '64%';
+	$button = '';
+	$icon = '<h1><i class="fa fa-refresh fa-spin"></i></h1>';
+	$note = '';
+} else
+if($status == '7'){
 	$k_stat = 'Berkas dikirim ke BKN';
 	$n_stat = '64%';
 	$button = '';
 	$icon = '<h1><i class="fa fa-refresh fa-spin"></i></h1>';
 	$note = '';
 } else
-if($status == '5'){
+if($status == '8'){
 	$k_stat = 'Berkas dikembalikan oleh BKN [Perbaikan Berkas]';
 	$n_stat = '80%';
-	$button = '';
+	$button = '<p><button type="button" class="btn btn-primary" onclick="location.href=\''.$perbaiki.'\';">Perbaiki Berkas</button></p>';
 	$icon = '<h1><i class="fa fa-refresh fa-spin"></i></h1>';
-	$note = '';
+	$note = $dt_usul['ket'];
 } else
-if($status == '6'){
+if($status == '9'){
 	$k_stat = 'Berkas usulan selesai';
 	$n_stat = '100%';
 	$button = '<p><button type="button" class="btn btn-primary" onclick="location.href=\''.$selesai.'\';">Detail Pengambilan</button></p>';
 	$icon = '<h1><i class="fa fa-check-circle"></i></h1>';
 	$note = '';
 } else
-if($status == '7'){
+if($status == '10'){
 	$k_stat = 'Dokumen sudah diambil';
 	$n_stat = '100%';
 	$button = '<p><button type="button" class="btn btn-primary" onclick="location.href=\''.$ambil.'\';">Detail Pengambilan</button></p>';

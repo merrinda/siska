@@ -8,6 +8,8 @@ if($jenis_kartu == '1'){
 	$tmtcp = $nokarpeg  = $tgskpn = $pmlk = $tgpmlk = 'required';
 	$nosk = $tgskpn = 'readonly style="background:black;"';
 	$tgtgpmlk = 'datepicker';
+	$sembunyi = '';
+	$sembunyi2 = 'style="display:none;"';
 	$jandaduda = '
 	<div class="row mb-3">
     <label for="inputJenis" class="col-sm-2 col-form-label">Status Perkawinan</label>
@@ -28,6 +30,8 @@ if($jenis_kartu == '2'){
 	$tmtcp = $nokarpeg  = $tgskpn = $pmlk = $tgpmlk = 'required';
 	$nosk = $tgskpn = 'readonly style="background:black;"';
 	$tgtgpmlk = 'datepicker';
+	$sembunyi = '';
+	$sembunyi2 = 'style="display:none;"';
 	$jandaduda = '
 	<div class="row mb-3">
     <label for="inputJenis" class="col-sm-2 col-form-label">Status Perkawinan</label>
@@ -48,8 +52,10 @@ if($jenis_kartu == '3'){
 	$tmtcp = $nokarpeg = $nosk = $tgskpn = 'required';
 	$pmlk = $tgpmlk = 'readonly style="background:black;"';
 	$tgtgskpn = 'datepicker';
+	$sembunyi = 'style="display:none;"';
+	$sembunyi2 = '';
 	$jandaduda = '
-	<div class="row mb-3">
+	<div class="row mb-3" style="display:none;">
     <label for="inputJenis" class="col-sm-2 col-form-label" style="background:black;color:black;"></label>
     <div class="col-sm-10">
 		<select class="form-control" aria-label="statuskawin" name="statuskawin" readonly style="background:black;">
@@ -114,44 +120,44 @@ if($kel == '1'){
   <div class="row mb-3">
     <label for="inputTglNkh" class="col-sm-2 col-form-label">TMT CPNS</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control datepicker" id="tmtcp" name="tmtcp" <?= $tmtcp ?>>
+      <input type="text" class="form-control datepicker" placeholder=" Pilih TMT CPNS" id="tmtcp" name="tmtcp" <?= $tmtcp ?>>
     </div>
   </div>
-  <div class="row mb-3">
+  <div class="row mb-3" <?= $sembunyi2 ?>>
     <label for="inputUnker" class="col-sm-2 col-form-label">No. SK PNS</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="inputUnker" name="noskpn" <?= $nosk ?>>
+      <input type="text" class="form-control" placeholder="Masukkan No. SK PNS" id="inputUnker" name="noskpn" <?= $nosk ?>>
     </div>
   </div>
-  <div class="row mb-3">
+  <div class="row mb-3" <?= $sembunyi2 ?>>
     <label for="inputTglNkh" class="col-sm-2 col-form-label">Tanggal SK PNS</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control <?= $tgtgskpn ?>" id="inputTglNkh" name="tgskpn" <?= $tgskpn ?>>
+      <input type="text" class="form-control <?= $tgtgskpn ?>" placeholder="Pilih Tanggal SK PNS" id="inputTglNkh" name="tgskpn" <?= $tgskpn ?>>
     </div>
   </div>
   <div class="row mb-3">
     <label for="inputUnker" class="col-sm-2 col-form-label">No. KARPEG</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="inputUnker" name="karpeg" <?= $nokarpeg ?>>
+      <input type="text" class="form-control" placeholder="Isikan No. Karpeg, isi tanda - jika belum memiliki" id="inputUnker" name="karpeg" <?= $nokarpeg ?>>
     </div>
   </div>
-  <div class="row mb-3">
+  <div class="row mb-3" <?= $sembunyi ?>>
     <label for="inputUnker" class="col-sm-2 col-form-label">Nama Pemilik</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="inputUnker" name="namapemilik" <?= $pmlk ?>>
+      <input type="text" class="form-control" placeholder="Isikan nama pemilik" id="inputUnker" name="namapemilik" <?= $pmlk ?>>
     </div>
   </div>
-  <div class="row mb-3">
+  <div class="row mb-3" <?= $sembunyi ?>>
     <label for="inputTglNkh" class="col-sm-2 col-form-label">Tanggal Lahir Pemilik</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control <?= $tgtgpmlk ?>" id="inputTglNkh" name="tglpemilik" <?= $tgpmlk ?>>
+      <input type="text" class="form-control <?= $tgtgpmlk ?>" placeholder=" Pilih tanggal lahir pemilik" id="inputTglNkh" name="tglpemilik" <?= $tgpmlk ?>>
     </div>
   </div>
   <?= $jandaduda ?>
   <div class="row mb-3">
     <label for="inputPasangan" class="col-sm-2 col-form-label">No. HP Aktif</label>
     <div class="col-sm-10">
-      <input type="text" class="form-control" id="inputPasangan" name="nohp" required>
+      <input type="text" class="form-control" placeholder="Isikan No. HP aktif" id="inputPasangan" name="nohp" required>
     </div>
   </div>
   
@@ -160,7 +166,7 @@ if($kel == '1'){
   </div>
   <br><br>
 </form>
-<button class="btn btn-danger" onclick="location.href='<?= $l ?>';">Selanjutnya</button>
+<!--<button class="btn btn-danger" onclick="location.href='<?= $l ?>';">Selanjutnya</button>-->
 </div>
 </div>
 

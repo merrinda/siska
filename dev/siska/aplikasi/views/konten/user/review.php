@@ -3,7 +3,13 @@ $dt_usul = mysqli_fetch_assoc($data_usul);
 $jenis_kartu = $dt_usul['jenis_usulan'];
 $id_usul = $dt_usul['id_usulan'];
 $l = $base_url.'/user/usul/status/'.$id_usul;
-
+//echo $dt_usul['status'];
+if($dt_usul['status'] == '0'){
+	$stval = '1';
+} else {
+	$stval = '5';
+}
+//echo $stval;
 $syrt = syarat($jenis_kartu);
 $doks = dokumen($id_usul);
 foreach($doks as $d){
@@ -30,6 +36,8 @@ if($jenis_kartu == '1'){
 	$nosk = $tgskpn = 'readonly style="background:black;"';
 	$tgtgpmlk = '';
 	$pmlk = $tgpmlk = 'readonly';
+	$sembunyi = '';
+	$sembunyi2 = 'style="display:none;"';
 	$jandaduda = '
 	<div class="row mb-3">
     <label for="inputJenis" class="col-sm-2 col-form-label">Status Perkawinan</label>
@@ -47,6 +55,8 @@ if($jenis_kartu == '2'){
 	$l = $base_url.'/user/usul/dok/'.$jenis_kartu;
 	$nosk = $tgskpn = 'readonly style="background:black;"';
 	$pmlk = $tgpmlk = 'readonly';
+	$sembunyi = '';
+	$sembunyi2 = 'style="display:none;"';
 	$jandaduda = '
 	<div class="row mb-3">
     <label for="inputJenis" class="col-sm-2 col-form-label">Status Perkawinan</label>
@@ -64,8 +74,10 @@ if($jenis_kartu == '3'){
 	$l = $base_url.'/user/usul/dok/'.$jenis_kartu;
 	$tmtcp = $nokarpeg = $nosk = $tgskpn = '';
 	$pmlk = $tgpmlk = 'readonly style="background:black;"';
+	$sembunyi = 'style="display:none;"';
+	$sembunyi2 = '';
 	$jandaduda = '
-	<div class="row mb-3">
+	<div class="row mb-3" style="display:none;">
     <label for="inputJenis" class="col-sm-2 col-form-label" style="background:black;color:black;"></label>
     <div class="col-sm-10">
 		<select class="form-control" aria-label="statuskawin" name="statuskawin" readonly style="background:black;">
@@ -130,13 +142,13 @@ if($kel == '1'){
       <input type="text" class="form-control" id="tmtcp" name="tmtcp" value="<?= $dt_usul['tmt_cpns'] ?>" readonly>
     </div>
   </div>
-  <div class="row mb-3">
+  <div class="row mb-3" <?= $sembunyi2 ?>>
     <label for="inputUnker" class="col-sm-2 col-form-label">No. SK PNS</label>
     <div class="col-sm-10">
       <input type="text" class="form-control" id="inputUnker" name="noskpn" value="<?= $dt_usul['no_sk_pns'] ?>" <?= $nosk ?> readonly>
     </div>
   </div>
-  <div class="row mb-3">
+  <div class="row mb-3" <?= $sembunyi2 ?>>
     <label for="inputTglNkh" class="col-sm-2 col-form-label">Tanggal SK PNS</label>
     <div class="col-sm-10">
       <input type="text" class="form-control" id="inputTglNkh" name="tgskpn" value="<?= $dt_usul['tgl_sk_pns'] ?>" <?= $tgskpn ?> readonly>
@@ -148,13 +160,13 @@ if($kel == '1'){
       <input type="text" class="form-control" id="inputUnker" name="karpeg" value="<?= $dt_usul['karpeg'] ?>" readonly>
     </div>
   </div>
-  <div class="row mb-3">
+  <div class="row mb-3" <?= $sembunyi ?>>
     <label for="inputUnker" class="col-sm-2 col-form-label">Nama Pemilik</label>
     <div class="col-sm-10">
       <input type="text" class="form-control" id="inputUnker" name="namapemilik" value="<?= $dt_usul['nama_pemilik'] ?>" <?= $pmlk ?> readonly>
     </div>
   </div>
-  <div class="row mb-3">
+  <div class="row mb-3" <?= $sembunyi ?>>
     <label for="inputTglNkh" class="col-sm-2 col-form-label">Tanggal Lahir Pemilik</label>
     <div class="col-sm-10">
       <input type="text" class="form-control" id="inputTglNkh" name="tglpemilik" value="<?= $dt_usul['tgl_lhr_pemilik'] ?>" <?= $tgpmlk ?> readonly>
@@ -192,9 +204,19 @@ foreach($syrt as $s){
 				?>
 					<button type="button" class="btn btn-success col-3" data-bs-toggle="modal" data-bs-target="#tampildokumenModal" data-bs-usul="<?= $id_usul ?>" data-bs-dok="<?= $s['kode_dok'] ?>" data-bs-ndok="<?= $s['nama_dok'] ?>" data-bs-ldok="<?= $stdok['alamat_dok'] ?>" data-bs-fdok="<?= $s['format'] ?>">Sudah diupload</button>
 				<?php
+				} else
+				if($statusdok == '2'){
+				?>
+					<button type="button" class="btn btn-info col-3" data-bs-toggle="modal" data-bs-target="#tampildokumenModal" data-bs-usul="<?= $id_usul ?>" data-bs-iddok="<?= $stdok['id_dok'] ?>" data-bs-dok="<?= $s['kode_dok'] ?>" data-bs-ndok="<?= $s['nama_dok'] ?>" data-bs-ldok="<?= $stdok['alamat_dok'] ?>" data-bs-fdok="<?= $s['format'] ?>">Dokumen Disetujui</button>
+				<?php
+				} else
+				if($statusdok == '4'){
+				?>
+					<button type="button" class="btn btn-success col-3" data-bs-toggle="modal" data-bs-target="#tampildokumenModal" data-bs-usul="<?= $id_usul ?>" data-bs-dok="<?= $s['kode_dok'] ?>" data-bs-ndok="<?= $s['nama_dok'] ?>" data-bs-ldok="<?= $stdok['alamat_dok'] ?>" data-bs-fdok="<?= $s['format'] ?>">Sudah Diperbaiki</button>
+				<?php
 				} else {
 				?>
-					<button type="button" class="btn btn-warning col-3" data-bs-toggle="modal" data-bs-target="#tampildokumenModal" data-bs-usul="<?= $id_usul ?>" data-bs-dok="<?= $s['kode_dok'] ?>" data-bs-ndok="<?= $s['nama_dok'] ?>">Perbaikan Dokumen</button>
+					<button type="button" class="btn btn-warning col-3" data-bs-toggle="modal" data-bs-target="#tampildokumenModal" data-bs-usul="<?= $id_usul ?>" data-bs-dok="<?= $s['kode_dok'] ?>" data-bs-ndok="<?= $s['nama_dok'] ?>" data-bs-ldok="<?= $stdok['alamat_dok'] ?>">Perbaikan Dokumen</button>
 				<?php
 				}
 			}
@@ -216,6 +238,7 @@ foreach($syrt as $s){
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+	  
 		<iframe id="dokumenasli" src="" width="100%" height="100%" frameborder="0" allowfullscreen webkitallowfullscreen></iframe>
 		<center><img id="gambar" src="" height="100%"></center>
       </div>
@@ -277,7 +300,7 @@ tampildokModal.addEventListener('show.bs.modal', function (event) {
 </p>
 <form id="update_status" action="<?= $a; ?>" method="post">
 <input type="hidden" name="id" value="<?= $id_usul ?>">
-<input type="hidden" name="status" value="1">
+<input type="hidden" name="status" value="<?= $stval ?>">
 </form>
 <!--
 <p align="right">
